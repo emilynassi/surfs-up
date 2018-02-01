@@ -8,7 +8,6 @@ from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func
 
 from flask import Flask, jsonify
-import datetime
 
 #################################################
 # Database Setup
@@ -90,7 +89,7 @@ def tobs():
 @app.route("/api/v1.0/<start>")
 def start(start):
     #Define start date
-    start_date = datetime.strptime(start,'%Y-%m-%d')
+    start_date = dt.strptime(start,'%Y-%m-%d')
     #Query temperature data
     max_temp = session.query(func.max(Measurements.tobs)).filter(Measurements.date >= start_date).all()
     min_temp = session.query(func.min(Measurements.tobs)).filter(Measurements.date >= start_date).all()
@@ -106,8 +105,8 @@ def start(start):
 @app.route("/api/v1.0/<start>/<end>")
 def start_end(start,end):
     #Define start date and end date
-    start_date = datetime.strptime(start,'%Y-%m-%d')
-    end_date = datetime.strptime(end,'%Y-%m-%d')
+    start_date = dt.strptime(start,'%Y-%m-%d')
+    end_date = dt.strptime(end,'%Y-%m-%d')
     #Query temperature data
     max_temp = session.query(func.max(Measurements.tobs)).filter(Measurements.date >= start_date).filter(Measurements.date <= end_date).all()
     min_temp = session.query(func.min(Measurements.tobs)).filter(Measurements.date >= start_date).filter(Measurements.date <= end_date).all()
