@@ -90,16 +90,16 @@ def tobs():
 @app.route("/api/v1.0/<start>")
 def start(start):
     #Define start date
-    start_date=datetime.strptime(start,'%Y-%m-%d')
+    start_date = datetime.strptime(start,'%Y-%m-%d')
     #Query temperature data
-    max_temp=session.query(func.max(Measurement.tobs)).filter(Measurement.date>=start_date).all()
-    min_temp=session.query(func.min(Measurement.tobs)).filter(Measurement.date>=start_date).all()
-    avg_temp=session.query(func.avg(Measurement.tobs)).filter(Measurement.date>=start_date).all()
+    max_temp = session.query(func.max(Measurements.tobs)).filter(Measurements.date >= start_date).all()
+    min_temp = session.query(func.min(Measurements.tobs)).filter(Measurements.date >= start_date).all()
+    avg_temp = session.query(func.avg(Measurements.tobs)).filter(Measurements.date >= start_date).all()
     
     temp={}
-    temp["Maximum Temperature"]=max_temp[0]
-    temp["Minimum Temperature"]=min_temp[0]
-    temp["Average Temperature"]=avg_temp[0]
+    temp["Maximum Temperature"] = max_temp[0]
+    temp["Minimum Temperature"] = min_temp[0]
+    temp["Average Temperature"] = avg_temp[0]
 
     return jsonify(temp)
 
@@ -109,14 +109,14 @@ def start_end(start,end):
     start_date = datetime.strptime(start,'%Y-%m-%d')
     end_date = datetime.strptime(end,'%Y-%m-%d')
     #Query temperature data
-    max_temp = session.query(func.max(Measurement.tobs)).filter(Measurement.date>=start_date).filter(Measurement.date<=end_date).all()
-    min_temp = session.query(func.min(Measurement.tobs)).filter(Measurement.date>=start_date).filter(Measurement.date<=end_date).all()
-    avg_temp = session.query(func.avg(Measurement.tobs)).filter(Measurement.date>=start_date).filter(Measurement.date<=end_date).all()
+    max_temp = session.query(func.max(Measurements.tobs)).filter(Measurements.date >= start_date).filter(Measurements.date <= end_date).all()
+    min_temp = session.query(func.min(Measurements.tobs)).filter(Measurements.date >= start_date).filter(Measurements.date <= end_date).all()
+    avg_temp = session.query(func.avg(Measurements.tobs)).filter(Measurements.date >= start_date).filter(Measurements.date <= end_date).all()
     
     temp={}
-    temp["Maximum Temperature"] = max_temp
-    temp["Minimum Temperature"] = min_temp
-    temp["Average Temperature"] = avg_temp
+    temp["Maximum Temperature"] = max_temp[0]
+    temp["Minimum Temperature"] = min_temp[0]
+    temp["Average Temperature"] = avg_temp[0]
 
     return jsonify(temp)
 
